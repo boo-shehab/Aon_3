@@ -1,16 +1,4 @@
-const arr = [
-    {
-        text: `I can do anything once I've had a cup of SleepyTime Tea, perhaps even fall sleep.`,
-        author: `Dillon Brady`
-    },{
-        text: `I can do anything once I've had a cup of SleepyTime Tea, perhaps even fall sleep.`,
-        author: `Dillon Brady`
-    },{
-        text: `I can do anything once I've had a cup of SleepyTime Tea, perhaps even fall sleep.`,
-        author: `Dillon Brady`
-    }
-]
-
+const arr = localStorage.getItem('notes') === null? [] : JSON.parse(localStorage.getItem('notes'));
 const stickyNotesContainer = document.getElementById("flex");
 const addNewNote = () => {
     const note = {
@@ -18,9 +6,9 @@ const addNewNote = () => {
         author: ""
     }
     arr.unshift(note)
+    save()
     showNotes();
 }
-
 const showNotes = () => {
     
     stickyNotesContainer.innerHTML = ''
@@ -57,13 +45,13 @@ const showNotes = () => {
     }
 }
 stickyNotesContainer.addEventListener("change", (e) => {
+    console.log(e);
     for(let i = 0; i < arr.length; i++) {
         if (e.target && e.target.id === `text-${i}`) {
             const note = {
                 text: e.target.value,
                 author: arr[i].author
             } 
-
             arr.splice(i, 1,note)
             showNotes()
         }else if (e.target && e.target.id === `author-${i}`) {
@@ -75,7 +63,12 @@ stickyNotesContainer.addEventListener("change", (e) => {
             arr.splice(i, 1,note)
             showNotes()
         }
-
     }
+    save();
 })
+
+const save = () => {
+    localStorage.setItem('notes', JSON.stringify(arr))
+}
+
 showNotes()

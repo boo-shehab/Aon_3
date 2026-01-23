@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(3, 300px);
+    grid-template-areas: "header header header" 
+                         "sidebar content content" 
+                         "footer footer footer";
+    gap: 20px;
+}
+
+.card {
+    background-color: black;
+    border: 10px solid blue;
+    padding: 16px;
+    height: 100%;
+}  */
+
+
+button {
+    cursor: pointer;
+    padding: 10px 20px;
+    width: 300px;
+    height: 100px;
+}
+
+button:hover {
+    background-color: lightcoral;
+}
+
+button:active {
+    background-color: lightblue;
+}
+
+button div {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+body {
+    background-color: aqua;
+}
+
+@media (max-width: 1000px) {
+
+    body {
+        background-color: black;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        background-color: yellow;
+    }
+}
+
+
+.parent {
+    
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background-color: blue;
+}
+
+.child {
+    position: absolute;
+    left: 50%;
+    top: 50%;;
+    transform: rotate(45deg);
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    transition: 1s;
+}
+
+.child:hover {
+    transform: rotate(0deg) !important;
+    height: 400px;
+}
