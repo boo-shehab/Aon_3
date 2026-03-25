@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.socket.io/4.8.3/socket.io.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>send message</h1>
+    <input type="text" id="sendMessage">
+    <button onclick="sendMessage()">send</button>
+    <ul id="messages">
+
+    </ul>
+    <hr />
+
+    <h1>File upload</h1>
+    <input type="file" id="fileInput">
+    <button type="button" onclick="uploadFile()">upload</button>
+    <p id="uploadedImages"></p>
+    
+
+    <script>
+
+        const socket = io("http://localhost:3000")
+
+        socket.on("sendMessage", (data) => {
+            const ul = document.getElementById("messages");
+            const li = document.createElement("li");
+            li.textContent = data;
+            ul.appendChild(li);
+        })
+
+        const sendMessage = () => {
+            const inputMessage = document.getElementById("sendMessage");
+            const message = inputMessage.value;
+            if(!message) return;
+            socket.emit("reseveMessage", message);
+        }
+
+
+        const uploadFile = async (e)=> {
+            
+            const inputFile = document.getElementById("fileInput");
+            const file = inputFile.files[0];
+            if(!file) return console.log("upload a file first");
+
+            try {
+                const formData = new FormData();
+                formData.append("photo", file);
+                const res = await fetch("http://localhost:3000/upload", {
+                    method: 'POST',
+                    body: formData
+                })
+                const data = await res.json();
+                console.log(data);
+                document.getElementById("uploadedImages").innerHTML += `success View file: <a target="_blank" href="http://localhost:3000${data.filePath}">${data.filePath} </a>`
+                
+            } catch(e) {
+                console.log(e);
+                
+            }
+        }
+    </script>
+</body>
+</html>
